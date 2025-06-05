@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools", "cython"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -61,6 +61,14 @@ homepage = "https://github.com/tatuylonen/wikitextprocessor"
 
 [tool.setuptools]
 zip-safe = false
+ext-modules = [
+    {name = "wikitextprocessor.common", sources = ["src/wikitextprocessor/common.py"]},
+    {name = "wikitextprocessor.core", sources = ["src/wikitextprocessor/core.py"]},
+    {name = "wikitextprocessor.luaexec", sources = ["src/wikitextprocessor/luaexec.py"]},
+    {name = "wikitextprocessor.node_expand", sources = ["src/wikitextprocessor/node_expand.py"]},
+    {name = "wikitextprocessor.parserfns", sources = ["src/wikitextprocessor/parserfns.py"]},
+    {name = "wikitextprocessor.parser", sources = ["src/wikitextprocessor/parser.py"]},
+]
 
 [tool.setuptools.package-data]
 wikitextprocessor = [

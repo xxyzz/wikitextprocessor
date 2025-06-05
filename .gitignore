@@ -6,3 +6,5 @@ wikitextprocessor.egg-info
 htmlcov
 temp*
 .venv
+*.c
+*.so

@@ -117,7 +117,7 @@ def mw_text_encode(text: str, charset: str) -> str:
     return "".join(parts)
 
 
-def mw_text_jsondecode(ctx: "Wtp", s: str, flags: int) -> dict[Any, Any]:
+def mw_text_jsondecode(ctx: "Wtp", s: str, flags: int) -> Any:
     value = json.loads(s)
     assert isinstance(ctx.lua, lupa.LuaRuntime)
     # Assign locally to assure type-checker this exists
@@ -154,7 +154,7 @@ def mw_text_jsondecode(ctx: "Wtp", s: str, flags: int) -> dict[Any, Any]:
     return value
 
 
-def mw_text_jsonencode(s: str, flags: int) -> str:
+def mw_text_jsonencode(s: Any, flags: int) -> Any:
     def recurse(x) -> Any:
         if isinstance(x, (str, int, float, type(None), type(True))):
             return x

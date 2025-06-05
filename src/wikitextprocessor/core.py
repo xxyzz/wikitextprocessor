@@ -137,12 +137,7 @@ class BegLineDisableManager:
         self.ctx.begline_disable_counter += 1
         self.ctx.begline_enabled = False
 
-    def __exit__(
-        self,
-        exc_type: type[BaseException],
-        exc_value: BaseException,
-        trace: TracebackType,
-    ) -> None:
+    def __exit__(self, exc_type, exc_value, trace) -> None:
         self.ctx.begline_disable_counter -= 1
         if self.ctx.begline_disable_counter < 1:
             self.ctx.begline_enabled = True

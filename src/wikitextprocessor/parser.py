@@ -364,58 +364,6 @@ class WikiNode:
     def __repr__(self) -> str:
         return self.__str__()
 
-    @overload
-    def find_child(
-        self,
-        target_kinds: LITERAL_LEVEL_KINDS,
-        with_index: Literal[True],
-    ) -> Iterator[tuple[int, "LevelNode"]]: ...
-
-    @overload
-    def find_child(
-        self,
-        target_kinds: LITERAL_LEVEL_KINDS,
-        with_index: Literal[False] = ...,
-    ) -> Iterator["LevelNode"]: ...
-
-    @overload
-    def find_child(
-        self,
-        target_kinds: Literal[NodeKind.TEMPLATE],
-        with_index: Literal[True],
-    ) -> Iterator[tuple[int, "TemplateNode"]]: ...
-
-    @overload
-    def find_child(
-        self,
-        target_kinds: Literal[NodeKind.TEMPLATE],
-        with_index: Literal[False] = ...,
-    ) -> Iterator["TemplateNode"]: ...
-
-    @overload
-    def find_child(
-        self,
-        target_kinds: Literal[NodeKind.HTML],
-        with_index: Literal[True],
-    ) -> Iterator[tuple[int, "HTMLNode"]]: ...
-
-    @overload
-    def find_child(
-        self,
-        target_kinds: Literal[NodeKind.HTML],
-        with_index: Literal[False] = ...,
-    ) -> Iterator["HTMLNode"]: ...
-
-    @overload
-    def find_child(
-        self, target_kinds: NodeKind, with_index: Literal[True]
-    ) -> Iterator[tuple[int, "WikiNode"]]: ...
-
-    @overload
-    def find_child(
-        self, target_kinds: NodeKind, with_index: Literal[False] = ...
-    ) -> Iterator["WikiNode"]: ...
-
     def find_child(
         self,
         target_kinds: NodeKind,
@@ -492,24 +440,6 @@ class WikiNode:
                     yield node
             else:
                 yield node
-
-    @overload
-    def find_html(
-        self,
-        target_tags: str | list[str],
-        with_index: Literal[True],
-        attr_name: str,
-        attr_value: str,
-    ) -> Iterator[tuple[int, "HTMLNode"]]: ...
-
-    @overload
-    def find_html(
-        self,
-        target_tags: str | list[str],
-        with_index: Literal[False] = ...,
-        attr_name: str = ...,
-        attr_value: str = ...,
-    ) -> Iterator["HTMLNode"]: ...
 
     def find_html(
         self,
@@ -679,14 +609,6 @@ class HTMLNode(WikiNode):
 class LevelNode(WikiNode):
     def __init__(self, level_type: NodeKind, linenum: int):
         super().__init__(level_type, linenum)
-
-    @overload
-    def find_content(
-        self, target_types: Literal[NodeKind.TEMPLATE]
-    ) -> Iterator[TemplateNode]: ...
-
-    @overload
-    def find_content(self, target_types: NodeKind) -> Iterator[WikiNode]: ...
 
     def find_content(self, target_types: NodeKind) -> Iterator[WikiNode]:
         """
@@ -2447,20 +2369,6 @@ def parse_encoded(ctx: "Wtp", text: str) -> WikiNode:
     finally:
         ctx.parser_stack = []
     return ret
-
-
-@overload
-def print_tree(
-    tree: Union[str, WikiNode], indent: int, ret_value: Literal[True]
-) -> str: ...
-
-
-@overload
-def print_tree(
-    tree: Union[str, WikiNode],
-    indent: int = ...,
-    ret_value: Literal[False] = ...,
-) -> None: ...
 
 
 def print_tree(
